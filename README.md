@@ -1,6 +1,9 @@
 
 # 代码说明
-
+- 模型权重：/model
+- 训练代码：/train_code_base_lllamafactory
+- 训练日志：/running.txt
+- 训练超参数：/training_args.yaml
 ## 训练配置
 
 **1. 硬件资源**  
@@ -21,6 +24,32 @@
 ## 环境配置
 
 - 参照init.sh进行配置
+```sh
+#创建虚拟环境
+conda create -n roborain python=3.10 -y  
+conda activate roborain
+
+#拉取LLaMA-factory仓库代码，安装依赖
+git clone --depth 1 https://github.com/hiyouga/LLaMA-Factory.git
+cd LLaMA-Factory
+pip install -e ".[torch,metrics]"
+#如有问题，可参照LLaMA-Factory源码安装环境, 源码链接：https://github.com/hiyouga/LLaMA-Factory/blob/main/README_zh.md?plain=1#L471
+
+#安装Qwen2.5-VL
+git clone https://github.com/QwenLM/Qwen2.5-VL.git
+cd Qwen2.5-VL
+pip install qwen-vl-utils[decord]
+pip install transformers
+pip install 'accelerate>=0.26.0'
+#如有问题，可参照Qwen2.5-VL源码安装环境，源码链接：https://github.com/QwenLM/Qwen2.5-VL
+
+
+#下面是从魔搭社区拉取RoboBrain2.0-7B模型，如有问题，可参照魔搭社区模型下载文档, 链接：https://modelscope.cn/docs/models/download
+pip install modelscope
+modelscope download --model BAAI/RoboBrain2.0-7B --local_dir /baai/baai_data21/RoboBrain2.0-7B
+
+
+```
 
 ## 数据
 
